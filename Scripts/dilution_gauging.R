@@ -90,7 +90,7 @@ for (i in 1:length(field_sub$Date)) {
   # 2) Calculate the area under the curve
   # 3) Use calculation to get discharge
 
-discharge <- function (df, mass, k_val){
+discharge <- function (df, mass, k_val, name){
   
   # Take the first and last 5 values of the dataframe to compare beginning and end background
   interp <- rbind(head(df, 5), tail(df,5))
@@ -117,7 +117,10 @@ discharge <- function (df, mass, k_val){
   # Plot again , will look the same but shifted down so background conductivity is gone
   ret$plt<- ggplot(data = df, aes(x = Time, y = dif)) +
     geom_point() +
-    geom_line()
+    geom_line() +
+    ylab('Difference in EC') +
+    ggtitle(name) +
+    theme_bw()
   
   # Take the area under the curve
   time <- df[['Time']] # pull time column
@@ -161,7 +164,7 @@ for (i in 1:length(sub$ID)){
   sub_field <- subset(sub, ID == sub$ID[i]) #subset the original csv
   mass <- sub_field$NaBr_g[1] # grab the mass of the salt
   df <- df_field[[sub$ID[i]]] # get the correct df from list of dataframes
-  dis <- discharge(df = df, mass = mass, k_val = .756) # run discharge function
+  dis <- discharge(df = df, mass = mass, k_val = .756, name = sub$ID[i]) # run discharge function
   dis_full[[sub$ID[i]]] <- dis # store discharge output in a list
   q_vals$q[i] <- dis$q
   q_vals$ID[i] <- sub$Site_Name[i]
@@ -176,8 +179,12 @@ out_path <- paste('~/Desktop/Field Methods/DCEW_Streamflow/Data/q_vals.csv')
 write.csv(q_vals, out_path)
 
 # Create multiplot figure of breakthrough curves
-ggarrange(plots)
-
+breakthrough.plt <- ggarrange(plotlist = plots)
+out_path <- paste('~/Desktop/Field Methods/Figures/breakthrough.png')
+ggsave(out_path,
+       breakthrough.plt, 
+       width = 16,
+       height = 13)
 
 # Run a sensitivity analysis on the K values ####
 k.sens <- seq(0.30, 1.1, by =0.05)
