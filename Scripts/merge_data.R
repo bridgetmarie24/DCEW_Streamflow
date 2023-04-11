@@ -61,10 +61,13 @@ for (i in 1:length(file_names)){
 
 # Merge all dataframes into one
 df.cont.full <- bind_rows(df_sites)
+df.cont.full$SiteType <- 'Continuous'
 
 # Merge dilution gauging and continuous monitoring sites streamflow ####
 dilu_g <- read.csv(paste(cd,'/Data/q_vals.csv', sep=''))
 dilu_g$Date <- as.POSIXct(dilu_g$Date) 
+dilu_g$ID <- str_sub(dilu_g$ID, end = -2) # Remove sample number to just get the site name
+dilu_g$SiteType <- 'Dilution Gauging'
 
 df.full <- bind_rows(dilu_g, df.cont.full) # concatenates the two dataframes
 df.full <- subset(df.full, select = -c(X, Area)) # drops unneccessary columns
