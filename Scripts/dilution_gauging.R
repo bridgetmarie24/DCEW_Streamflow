@@ -14,9 +14,11 @@ library(ggpubr) # for creating multi-plot figures
 library(haven) # to import .dat files
 library(pracma) # area under the curve
 
+cd <- '~/Desktop/Field Methods/DCEW_Streamflow/'
+
 # Import the data ####
 
-field <- read.csv('~/Desktop/Field Methods/Data/Streamflow_Data.csv')
+field <- read.csv('~/Desktop/Field Methods/DCEW_Streamflow/Data/Streamflow_Data.csv')
 field$Date <- as.Date(field$Date)
 
 # This function will import the .dat file and only take the necessary data between start
@@ -46,7 +48,7 @@ for (i in 1:length(day3$Date)) {
   print(name)
   
   # Import the data and clip to start and end time
-  file <- dat_file('~/Desktop/Field Methods/FieldData/everything_2023.dat',
+  file <- dat_file('~/Desktop/Field Methods/DCEW_Streamflow/FieldData/everything_2023.dat',
                    start.time = paste(as.character(day3$Date[i]), day3$Start_time[i], sep = ' '),
                    end.time = paste(as.character(day3$Date[i]), day3$End_time[i], sep = ' '))
   
@@ -67,7 +69,7 @@ field_sub <- subset(field, ID != '022423_LowMain_2' & Date != '2023-03-10')
 
 for (i in 1:length(field_sub$Date)) {
   name <- field_sub$ID[i] # create unique name for list
-  file_name <- paste('~/Desktop/Field Methods/FieldData/', field_sub$ID[i], '.dat', sep = '')
+  file_name <- paste('~/Desktop/Field Methods/DCEW_Streamflow/FieldData/', field_sub$ID[i], '.dat', sep = '')
   # Import the data and clip to start and end time
   file <- dat_file(file_name,
                    start.time = paste(as.character(field_sub$Date[i]), field_sub$Start_time[i], sep = ' '),
@@ -153,27 +155,45 @@ sub <- subset(field, !(ID %in% c('022423_LowMain_2', '031023_Midmain_1' )))
 # Creating a list to store discharge
 dis_full <- list() #creating a list to store discharge
 q_vals <- data.frame(q = 1:length(sub$Date)) # dataframe for q values
+plots <- list()
 
 for (i in 1:length(sub$ID)){
   sub_field <- subset(sub, ID == sub$ID[i]) #subset the original csv
   mass <- sub_field$NaBr_g[1] # grab the mass of the salt
   df <- df_field[[sub$ID[i]]] # get the correct df from list of dataframes
-  dis <- discharge(df = df, mass = mass) # run discharge function
+  dis <- discharge(df = df, mass = mass, k_val = .756) # run discharge function
   dis_full[[sub$ID[i]]] <- dis # store discharge output in a list
   q_vals$q[i] <- dis$q
-  q_vals$ID[i] <- sub$ID[i]
+  q_vals$ID[i] <- sub$Site_Name[i]
   q_vals$Date[i] <- as.character(sub$Date[i])
   q_vals$Area[i] <- dis$area
   q_vals$uaa[i] <- sub$UAA[i]
+  plots[[i]] <- dis$plt
 }
 
-k.sens <- range(0.30, 1.1, 0.05)
-
-# Export the dataframe ####
-out_path <- paste('~/Desktop/Field Methods/Data/q_vals.csv')
+# Export the dataframe #
+out_path <- paste('~/Desktop/Field Methods/DCEW_Streamflow/Data/q_vals.csv')
 write.csv(q_vals, out_path)
 
+# Create multiplot figure of breakthrough curves
+ggarrange(plots)
 
+
+# Run a sensitivity analysis on the K values ####
+k.sens <- seq(0.30, 1.1, by =0.05)
+df <- dis_full[[sub$ID[1]]]$data # High Main Sample 1 02-24-23
+m <- sub$NaBr_g[1] # pull mass of salt
+df.sens <- data.frame(K = k.sens) # create dataframe to store discharge
+
+# Loop over and store the different discharge with different k values
+for (i in 1:length(k.sens)){
+  dis <- discharge(df = df, mass = m, k_val = k.sens[i])
+  df.sens$q[i] <- dis$q
+}
+
+# Export the csv
+out_path <- paste(cd, '/Data/k_sens.csv', sep='') 
+write.csv(df.sens, out_path)
 
 
 
