@@ -11,8 +11,13 @@ library(Matrix) # Gets tidyverse to import
 library(tidyverse) # data manipulation
 library(ggplot2)
 
+# Set your directory ####
+
+cd <- '~/Desktop/Field Methods/DCEW_streamflow/'
+
 # Import the data ####
-q_vals <- read.csv('~/Desktop/Field Methods/Data/q_vals.csv')
+
+q_vals <- read.csv(paste(cd, 'Data/q_vals.csv', sep=''))
 q_vals$Date <- as.Date(q_vals$Date)
 
 # Check for normality ####
@@ -34,7 +39,7 @@ reg <- ggplot(data = q_vals, aes(x = uaa, y = q)) +
   geom_text(x=26.15,y=30, label = 'R2 = 0.11')
 reg
 
-ggsave('~/Desktop/Field Methods/Figures/regress.png',
+ggsave(paste(cd, 'Figures/regress.png', sep=''),
        plot = reg,
        width = 4,
        height = 4)
@@ -47,7 +52,7 @@ reg_ind <- ggplot(data = q_vals, aes(x = uaa, y = q, color = as.character(Date))
   ylab('Discharge (L/s)') +
   xlab('Upslope Accumulated Area (km^2)') 
 reg_ind
-ggsave('~/Desktop/Field Methods/Figures/ind_reg.svg',
+ggsave(paste(cd,'Figures/ind_reg.svg', sep=''),
        plot = reg,
        width = 6.5,
        height = 4)
