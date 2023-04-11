@@ -1,0 +1,16 @@
+Date,Site_Name,UAA,ID,Site_location,Start_time,NaBr_g,bkc_us_cm,pkc_us_cm,Peak_time,End_time,Comments
+2023-02-24,HighMain1,26.04,022423_HighMain_1,116.1636342°W 43.693182°N,12:02:20,206.78,0.159,0.29,12:03:00,12:06:00,"25F, partly cloudy, mostly sunny, slight breeze"
+2023-02-24,MidMain1,26.26,022423_MidMain_1,116.166361°W 43.6908224°N,11:31:38,198.11,0.161,0.24,11:32:35,11:39:00,
+2023-02-24,MidMain2,26.26,022423_MidMain_2,116.166361°W 43.6908224°N,11:41:58,207.75,0.162,0.235,11:43:00,11:47:00,"Ice build up on stream banks ~1-3 ft into the streams, no other major blockages"
+2023-02-24,LowMain1,26.75,022423_LowMain_1,116.173383°W 43.689190°N,10:35:32,196.1,0.162,0.215,10:36:28,10:51:18,"No ice bridges; used time on datalogger, not watch time because datalogger is not adjusted for daylight savings"
+2023-02-24,LowMain2,26.75,022423_LowMain_2,116.173383°W 43.689190°N,10:56:28,206.47,0.166,0.22,10:57:30,11:06:36,
+2023-03-03,HighMain1,26.04,030322_HighMain_Sample1,116.1636342°W 43.693182°N,11:23:46,399.07,0.139,0.33,11:24:36,11:31:10,
+2023-03-03,HighMain2,26.04,030322_HighMain_Sample2,116.1636342°W 43.693182°N,11:35:38,404.54,0.14,0.34,11:36:28,11:48:46,Log jam ~2m above probe. Sample 2 ending: 0.146
+2023-03-03,MidMain1,26.26,030322_MidMain_Sample1,116.166361°W 43.6908224°N,10:44:52,397.33,0.15,0.36,10:46:02,10:51:38,Small log ~1m upstream of probe. Used COND not CONDnot
+2023-03-03,MidMain2,26.26,030322_MidMain_Sample2,116.166361°W 43.6908224°N,10:55:32,406.7,0.152,0.36,10:56:44,11:03:00,
+2023-03-03,LowMain1,26.75,030322_LowerMain_Sample1,116.173383°W 43.689190°N,10:05:52,398.65,0.146,0.282,10:06:48,10:12:30,Ending EC was 0.148 
+2023-03-10,HighMain1,26.04,031023_Highmain_1,116.1636342°W 43.693182°N,11:23:17,399.807,0.149,0.379,11:25:07,11:35:01,
+2023-03-10,HighMain2,26.04,031023_Highmain_2,116.1636342°W 43.693182°N,11:39:31,402.403,0.154,0.377,11:41:23,11:52:15,
+2023-03-10,MidMain1,26.26,031023_Midmain_1,116.166361°W 43.6908224°N,10:53:20,403.119,0.122,,,11:05:00,Graph looks like the baseline never stabilized. No peak apparent. 
+2023-03-10,LowMain1,26.75,031023_Lowmain_1,116.173383°W 43.689190°N,9:53:18,403.138,0.143,0.31,9:55:00,10:03:00,Track pad on laptop stopped working due to moisture. We began recording data without the laptop.
+2023-03-10,LowMain2,26.75,031023_Lowmain_2,116.173383°W 43.689190°N,10:04:45,399.207,0.147,0.315,10:06:00,10:16:35,
