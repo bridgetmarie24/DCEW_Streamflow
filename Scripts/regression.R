@@ -41,12 +41,13 @@ reg <- ggplot(data = q_vals, aes(x = uaa, y = lt)) +
   theme_bw() +
   ylab('log(Discharge)') +
   xlab('Upslope Accumulated Area (km^2)') +
-  geom_text(x=10,y=4.5, label = 'R2 = 0.73')
+  geom_text(x=10,y=4.5, label = 'R2 = 0.73') +
+  theme(text = element_text(size=18, family = 'Arial')) # change font size and type
 reg
 
 ggsave(paste(cd_figures, 'regress.png', sep=''),
        plot = reg,
-       width = 4,
+       width = 6,
        height = 4)
 
 # Visualize regression for individual weeks ####
