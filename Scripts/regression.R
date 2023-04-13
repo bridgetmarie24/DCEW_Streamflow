@@ -36,7 +36,7 @@ summary(mod)
 
 # Visualize the regression ####
 reg <- ggplot(data = q_vals, aes(x = uaa, y = lt)) +
-  geom_point() +
+  geom_point(aes(colour = ID)) +
   geom_smooth(method = 'lm', fill = 'grey', color = 'black') +
   theme_bw() +
   ylab('log(Discharge)') +
