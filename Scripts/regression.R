@@ -49,7 +49,7 @@ reg <- ggplot(data = q_vals, aes(x = uaa, y = lt)) +
   geom_smooth(method = 'lm', fill = 'grey', color = 'black') +
   theme_bw() +
   ylab('log(Discharge)') +
-  xlab('Upslope Accumulated Area (km^2)') +
+  xlab(bquote('Upslope Accumulated Area ' (km^2))) +
   geom_text(x=10,y=4.5, label = lab, size = 7, parse = TRUE) +
   theme(text = element_text(size=18, family = 'Arial')) # change font size and type
 reg
@@ -70,6 +70,26 @@ reg_ind
 ggsave(paste(cd_figures,'ind_reg.svg', sep=''),
        plot = reg,
        width = 6.5,
+       height = 4)
+
+# Regression for field measurements only ####
+field <- read.csv(paste(cd, 'Data/q_vals.csv', sep=''))
+field$lt <- log(field$q)
+field$Date <- as.Date(field$Date)
+field$ID <- str_sub(field$ID, end = -2) # Remove sample number to just get the site name
+
+reg_field <- ggplot(data = field, aes(x = uaa, y = lt, color = as.character(Date), fill = as.character(Date))) +
+  geom_smooth(method = 'lm', alpha = 0.15) +
+  geom_point(size = 3, aes(shape = ID)) +
+  theme_bw() +
+  ylab('Discharge (L/s)') +
+  xlab(bquote('Upslope Accumulated Area ' (km^2))) +
+  labs(fill = 'Measurement Date', color = 'Measurement Date', shape = 'Site ID') +
+  theme(text = element_text(size=18, family = 'Arial'))
+
+ggsave(paste(cd_figures,'field_ind_reg.png', sep=''),
+       plot = reg_field,
+       width = 6,
        height = 4)
 
 
